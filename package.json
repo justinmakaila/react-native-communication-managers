@@ -1,0 +1,25 @@
+{
+	"name": "react-native-communication-managers",
+	"version": "0.0.1",
+	"description": "React Native components for accessing the phone, SMS, and email from within your application.",
+	"main": "CommunicationManagers.ios.js",
+	"author": {
+		"name": "Justin Makaila",
+		"url": "http://justinmakaila.com"
+	},
+	"peerDependencies": {
+		"react-native": ">=0.4.0"
+	},
+	"homepage": "https://github.com/justinmakaila/react-native-communication-managers",
+	"keywords": [
+		"react",
+		"react-native",
+		"react-component",
+		"ios",
+		"communication",
+		"sms",
+		"email",
+		"phone"
+	],
+	"license": "MIT"
+}
