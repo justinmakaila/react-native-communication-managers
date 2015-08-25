@@ -35,28 +35,38 @@
 
 RCT_EXPORT_MODULE()
 
-RCT_EXPORT_METHOD(composeEmailTo:(NSString *)recipient completion:(RCTResponseSenderBlock)completion) {
-  [self composeEmailTo:recipient subject:nil completion:completion];
+/**
+ composeEmailToRecipients(recipients: Array<String>, ccRecipients: Array<String>, bccRecipients: Array<String>)
+ */
+RCT_EXPORT_METHOD(composeEmailToRecipients:(NSArray *)recipients ccRecipients:(NSArray *)ccRecipients bccRecipients:(NSArray *)bccRecipients completion:(RCTResponseSenderBlock)completion) {
+  [self composeEmailTo:recipients ccRecipients:ccRecipients bccRecipients:bccRecipients subject:nil body:nil completion:completion];
 }
 
-RCT_REMAP_METHOD(composeEmailWithSubject, composeEmailTo:(NSString *)recipient subject:(NSString *)subject completion:(RCTResponseSenderBlock)completion) {
-  [self composeEmailTo:recipient subject:subject body:nil completion:completion];
+/**
+ composeEmailToRecipientsWithSubject(recipients: Array<String>, ccRecipients: Array<String>, bccRecipients: Array<String>, subject: String)
+ */
+RCT_REMAP_METHOD(composeEmailToRecipientsWithSubject, composeEmailToRecipients:(NSArray *)recipients ccRecipients:(NSArray *)ccRecipients bccRecipients:(NSArray *)bccRecipients subject:(NSString *)subject completion:(RCTResponseSenderBlock)completion) {
+  [self composeEmailToRecipients:recipients ccRecipients:ccRecipients bccRecipients:bccRecipients subject:subject completion:completion];
 }
 
-RCT_REMAP_METHOD(composeEmailWithSubjectAndBody, composeEmailTo:(NSString *)recipient subject:(NSString *)subject body:(NSString *)body completion:(RCTResponseSenderBlock)completion) {
+/**
+ composeEmailToRecipientsWithSubjectAndBody(recipients: Array<String>, ccRecipients: Array<String>, bccRecipients: Array<String>, subject: String, body: String)
+ */
+RCT_REMAP_METHOD(composeEmailToRecipientsWithSubjectAndBody, composeEmailTo:(NSArray *)recipients ccRecipients:(NSArray *)ccRecipients bccRecipients:(NSArray *)bccRecipients subject:(NSString *)subject body:(NSString *)body completion:(RCTResponseSenderBlock)completion) {
   if ([MFMailComposeViewController canSendMail]) {
     self.completion = completion;
     
     MFMailComposeViewController *mailController = [[MFMailComposeViewController alloc] init];
     mailController.mailComposeDelegate = self;
-    [mailController setToRecipients:@[recipient]];
+    [mailController setToRecipients:recipients];
+    [mailController setCcRecipients:ccRecipients];
+    [mailController setBccRecipients:bccRecipients];
     [mailController setSubject:subject];
     [mailController setMessageBody:body isHTML:NO];
     
     [[self rootViewController] presentViewController:mailController animated:YES completion:nil];
   }
   else {
-      // TODO: Handle the error case
     if (completion) {
       completion(@[@"This device does not support sending email"]);
     }

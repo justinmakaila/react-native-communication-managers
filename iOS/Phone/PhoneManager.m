@@ -13,14 +13,20 @@
 
 RCT_EXPORT_MODULE()
 
-RCT_EXPORT_METHOD(callNumber:(NSString *)phoneNumber) {
+RCT_EXPORT_METHOD(call:(NSString *)phoneNumber) {
   NSURL *phoneNumberURL = [NSURL URLWithString:[NSString stringWithFormat:@"tel:%@", phoneNumber]];
+  
   if ([[UIApplication sharedApplication] canOpenURL:phoneNumberURL]) {
     [[UIApplication sharedApplication] openURL:phoneNumberURL];
   }
   else {
-    UIAlertView *notPermitted=[[UIAlertView alloc] initWithTitle:@"Alert" message:@"Your device doesn't support this feature." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
-    [notPermitted show];
+    UIAlertView *notPermittedAlertView = [[UIAlertView alloc] initWithTitle:@"Alert"
+                                                                    message:@"Your device doesn't support this feature."
+                                                                   delegate:nil
+                                                          cancelButtonTitle:@"OK"
+                                                          otherButtonTitles:nil];
+    
+    [notPermittedAlertView show];
   }
   
 }

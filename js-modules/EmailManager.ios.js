@@ -1,4 +1,4 @@
-const React = require('react-native')
-const { NativeModules } = React
+const React = require('react-native');
+const { NativeModules } = React;
 
-module.exports = NativeModules.EmailManager
+module.exports = NativeModules.EmailManager;
