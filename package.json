@@ -1,6 +1,6 @@
 {
 	"name": "react-native-communication-managers",
-	"version": "0.0.1",
+	"version": "0.1.1",
 	"description": "React Native components for accessing the phone, SMS, and email from within your application.",
 	"main": "CommunicationManagers.ios.js",
 	"author": {
